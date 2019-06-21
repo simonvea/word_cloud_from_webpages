@@ -1,54 +1,29 @@
 <!DOCTYPE html>
 <html lang="no">
     <head>
-        <title>Yo</title>
+        <title>Ordsky.no</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="./style.css" type="text/css">
     </head>
     <body>
-        <p>Hello World</p>
-
-        <form>
-            <textarea id="lenker">Legg til lenke her, separer flere linker med komma</textarea>
-            <input type="text" id="html-element" placeholder="HTML Element med relevant text (CSS syntax)">
-            <button type="submit" id="klikk-meg">Send data</button>
-        </form>
-
-        <p id="response"></p>
-        <script>
-
-            async  function sendData(data) {
-                const url = '/keywords';
-                const init = {
-                    method: "POST",
-                    headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    body: JSON.stringify(data)
-                }
-
-                const response = await fetch(url, init);
-                const html = await response.text();
-
-                return html
-            }
-        
-            document.querySelector('form').addEventListener("submit", (e) => {
-                e.preventDefault()
-                const linksElement = document.querySelector('#lenker');
-                const targetHTMLElement = document.querySelector('#html-element');
-                const htmlElement = targetHTMLElement.value;
-                const urls = linksElement.value.split(",");
-                const data = {urls, htmlElement};
-
-                sendData(data).then(response => {
-                    document.getElementById('response').innerHTML = response;
-                }).catch(err => {
-                    console.error(err);
-                    document.getElementById('response').innerHTML = '<p> Beklager, men noe gikk galt :( </p>';
-                })
-                linksElement.value = "Legg til lenke her, separer flere lenker med komma";
-                targetHTMLElement.value = "";
-            })
-            
-        </script>
+        <header>
+            <h1>Ordsky.no</h1>
+        </header>
+        <main>
+            <form>
+                <textarea id="lenker">Legg til lenke her, separer flere linker med komma</textarea>
+                <input type="text" id="html-element" placeholder="HTML Element med relevant text (CSS syntax)">
+                <button type="submit" id="klikk-meg">Send data</button>
+            </form>
+            <section>
+                    <div id="response"></div>
+            </section>
+        </main>
+        <footer>
+            &copy; Simon Opheim
+        </footer>
+        <script src="./main.js" type="text/javascript"></script>
     </body>
 </html>
