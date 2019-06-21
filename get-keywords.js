@@ -5,7 +5,7 @@ async function getKeyWordsFromUrls(urls, htmlElement) {
     const wordCountsPerPage = [];
     for (url of urls) {
         const keyWords = await getKeyWords(url, htmlElement);
-        wordCountsPerPage.push(keyWords)
+        wordCountsPerPage.push(keyWords);
     }
     return wordCountsPerPage
 }
@@ -29,9 +29,10 @@ async function getHTML(url) {
 }
 
 function countWords(string) {
-    const regExp = /\b\w+\b/gi;
+    const regExp = /\b[\wæøå]+\b/gi;
     const words = string.match(regExp);
-    const count = {}
+    const count = {};
+    
     for (let word of words) {
         if(!count[word]) {count[word] = 1}
         else {count[word]++}

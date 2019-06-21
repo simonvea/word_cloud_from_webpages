@@ -3,7 +3,7 @@
 Dette er et forsøk på å lage et program som tar linker som input og outputer en ordsky
 
 ### Finne ord
-Funksjonen getKeywordsFromUrls tar imot et array av nettaddresser og returnerer et array med et aggregat av ordene på siden. Man kan også velge hvilket html element man vil ha teksten fra ved å legge det til som et andre argument. Default element er <body>.
+Funksjonen getKeywordsFromUrls(urls, htmlElement) tar imot et array av nettaddresser og returnerer et array med et aggregat av ordene på siden. Man kan også velge hvilket html element man vil ha teksten fra ved å legge det til som et andre argument. Default element er <body>.
 
 Hjelpefunksjonen combineCountsFromArray(array) kombinerer resultatet.
 

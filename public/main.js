@@ -10,19 +10,20 @@ form.addEventListener("submit", (e) => {
     const urls = cleanInput(rawData);
 
     if(urls.some(url => !checkIfLink(url))) {
+        console.error("Feil format på lenker");
         document.getElementById('response').innerHTML = '<p> Linkene må ha gyldig format! Enten begynne på www eller http og separeres med komma!</p>';
         return
     }
     const urlsWithHttp = urls.map(url => url.startsWith("www") ? prependHttp(url): url);
-    const data = {urlsWithHttp, htmlElement};
+    const data = {urls: urlsWithHttp, htmlElement};
     console.log(data)
 
-    // sendData(data).then(response => {
-    //     document.getElementById('response').innerHTML = response;
-    // }).catch(err => {
-    //     console.error(err);
-    //     document.getElementById('response').innerHTML = '<p> Beklager, men noe gikk galt :( </p>';
-    // })
+    sendData(data).then(response => {
+        document.getElementById('response').innerHTML = response;
+    }).catch(err => {
+        console.error(err);
+        document.getElementById('response').innerHTML = '<p> Beklager, men noe gikk galt :( </p>';
+    })
     linksElement.value = "Legg til lenke her, separer flere lenker med komma";
     targetHTMLElement.value = "";
 })
@@ -34,7 +35,7 @@ function cleanInput(data) {
 }
 
 function checkIfLink(link) {
-    const linkRegExp = /^(http:\/\/)?www\.\w+\.\w+$/;
+    const linkRegExp = /^(https?:\/\/)?www\.\w+\.\w+/;
     return linkRegExp.test(link);
 }
 

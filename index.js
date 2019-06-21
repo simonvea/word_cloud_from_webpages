@@ -1,5 +1,6 @@
 'use strict'
 
+const createWordCloud = require('./src/createWordCloud')
 const getKeyWordsFromUrls = require('./get-keywords');
 const helpers = require('./helpers');
 const express = require('express');
@@ -12,16 +13,15 @@ app.use(express.static('public'));
 
 app.use(express.json())
 app.post('/keywords', (req, res) => {
-    const data = req.body;
     const urls = req.body.urls;
     const htmlElement = req.body.htmlElement;
     getKeyWordsFromUrls(urls, htmlElement)
         .then(wordCounts => {
-            const wordCountTotal = helpers.combineCountsFromArray(wordCounts);
+            const wordCountTotal = helpers.combineResultsFromEachUrl(wordCounts);
             const cleanedWordCount = helpers.getRelevantKeyWords(wordCountTotal);
-            res.send(cleanedWordCount)
+            const html = createWordCloud(cleanedWordCount);
+            res.send(html)
         }).catch(error => console.log(error));
-    console.log(data);
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

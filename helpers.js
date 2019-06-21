@@ -2,19 +2,41 @@
 const commonWordsDefault = require('./common-words.json')
 
 module.exports = {
-    combineCountsFromArray,
-    getRelevantKeyWords
+    combineResultsFromEachUrl,
+    getRelevantKeyWords,
+    groupWordsByCount
 }
 
-function combineCountsFromArray(counts) {
+function groupWordsByCount(wordsObject) {
+    const words = Object.keys(wordsObject);
+    const grouped = [];
+    
+    for (word of words) {
+        const number = wordsObject[word];
+        const index = indexOfNumber(number, grouped)
+        if(index != -1) {
+            grouped[index].words.push(word)
+        } else {
+            grouped.push({count: number, words: [word]})
+        }
+    }
+
+    return grouped
+}
+
+function indexOfNumber(number, array) {
+    return array.findIndex(object => object.count == number)
+}
+
+function combineResultsFromEachUrl(pages) {
     const result = {};
-    counts.forEach(wordsObject => {
-        const words = Object.keys(wordsObject);
+    pages.forEach(page => {
+        const words = Object.keys(page);
         for (const word of words) {
             if(!result[word]) {
-                result[word] = wordsObject[word]
+                result[word] = page[word]
             } else {
-                result[word] += wordsObject[word]
+                result[word] += page[word]
             }
         }
     })
@@ -41,13 +63,16 @@ function getWordsWithMin(wordsObject, minimum) {
 function removeWords(wordsObject, wordsToRemove) {
     const oldWords = Object.keys(wordsObject);
     const wordsLeft = oldWords.map(word => {
-        if (!wordsToRemove.includes(word) && word.length > 2) {
+        if (!wordsToRemove.includes(word) && word.length > 2 && word != undefined) {
             return word
         }
     })
     const newObject = {};
     for (const word of wordsLeft) {
-        newObject[word] = wordsObject[word]
+        if(word != undefined) {
+            newObject[word] = wordsObject[word]
+        }
+        
     }
     return newObject
 }
