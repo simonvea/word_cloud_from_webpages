@@ -3,7 +3,6 @@ module.exports = createWordCloud
 const helpers = require('../helpers');
 
 function createWordCloud(wordsObject, numberOfWords = 10) {
-
     const groupedWords = helpers.groupWordsByCount(wordsObject);
     const sortedWords = sortWords(groupedWords); //sorted low to high
     const mostCountedWords = [];

@@ -1,7 +1,7 @@
 const rp = require('request-promise-native');
 const HTMLParser = require('node-html-parser');
 
-async function getKeyWordsFromUrls(urls, htmlElement) {
+async function getKeyWordsFromUrls(urls, htmlElement = 'body') {
     const wordCountsPerPage = [];
     for (url of urls) {
         const keyWords = await getKeyWords(url, htmlElement);

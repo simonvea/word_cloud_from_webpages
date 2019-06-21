@@ -5,7 +5,9 @@ form.addEventListener("submit", (e) => {
     e.preventDefault()
     const linksElement = document.querySelector('#lenker');
     const targetHTMLElement = document.querySelector('#html-element');
-    const htmlElement = targetHTMLElement.value;
+    const numberElement = document.getElementById("number-of-words");
+    let numberOfWords = numberElement.value;
+    let htmlElement = targetHTMLElement.value;
     const rawData = linksElement.value.split(",");
     const urls = cleanInput(rawData);
 
@@ -15,7 +17,15 @@ form.addEventListener("submit", (e) => {
         return
     }
     const urlsWithHttp = urls.map(url => url.startsWith("www") ? prependHttp(url): url);
-    const data = {urls: urlsWithHttp, htmlElement};
+
+    if(numberOfWords.length < 1) {numberOfWords = 10};
+    if(htmlElement.length < 1) {htmlElement = 'body'};
+
+    const data = {
+        urls: urlsWithHttp,
+        htmlElement,
+        numberOfWords
+    };
     console.log(data)
 
     sendData(data).then(response => {

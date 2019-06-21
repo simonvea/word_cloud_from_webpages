@@ -15,13 +15,18 @@ app.use(express.json())
 app.post('/keywords', (req, res) => {
     const urls = req.body.urls;
     const htmlElement = req.body.htmlElement;
+    const numberOfWords = req.body.numberOfWords;
+    console.log(req.body);
     getKeyWordsFromUrls(urls, htmlElement)
         .then(wordCounts => {
             const wordCountTotal = helpers.combineResultsFromEachUrl(wordCounts);
             const cleanedWordCount = helpers.getRelevantKeyWords(wordCountTotal);
-            const html = createWordCloud(cleanedWordCount);
+            const html = createWordCloud(cleanedWordCount, numberOfWords);
             res.send(html)
-        }).catch(error => console.log(error));
+        }).catch(error => {
+            //res.send()
+            console.log(error)
+        });
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
