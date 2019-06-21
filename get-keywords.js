@@ -1,18 +1,22 @@
 const rp = require('request-promise-native');
 const HTMLParser = require('node-html-parser');
 
-async function getKeyWordsFromEachUrl(urls) {
+async function getKeyWordsFromUrls(urls, htmlElement) {
     const wordCountsPerPage = [];
     for (url of urls) {
-        const keyWords = await getKeyWords(url);
+        const keyWords = await getKeyWords(url, htmlElement);
         wordCountsPerPage.push(keyWords)
     }
     return wordCountsPerPage
 }
 
-async function getKeyWords(url) {
+async function getKeyWords(url, htmlElement = 'body') {
     const root = await getHTML(url);
-    const mainInfo = root.querySelector(".import-decoration");
+    const mainInfo = root.querySelector(htmlElement);
+    if(!mainInfo) {
+        class noTextError extends Error {}
+        throw new noTextError
+    };
     const text = mainInfo.rawText;
     const words = countWords(text);
     return words
@@ -35,4 +39,4 @@ function countWords(string) {
     return count
 }
 
-module.exports = getKeyWordsFromEachUrl
+module.exports = getKeyWordsFromUrls
