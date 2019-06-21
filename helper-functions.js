@@ -1,7 +1,9 @@
+const fs = require('fs');
 
-module.exports = {
+const commonWordsFile = fs.readFileSync('./common-words.json');
+const commonWordsDefault = JSON.parse(commonWordsFile);
 
-    combineCounts(countsArray) {
+exports.combineCounts = (countsArray) => {
         const combinedObject = {};
         countsArray.forEach(wordsObject => {
             const words = Object.keys(wordsObject);
@@ -14,10 +16,9 @@ module.exports = {
             }
         })
         return combinedObject
-    },
+    }
 
-    removeCommonWords(wordsObject) {
-        const commonWords = ["vi", "du", "med", "og", "en", "er", "et", "IT", "som", "der", "til", "ogs", "jobbe", "av","har", "men", "Du", "vil", "egen","re", "din", "oss", "mer", "for", "nye", "deg", "eller", "selv", "hvor", "helt", "seg", "basert", "andre", "godt", "noe", "gjennom"]
+exports.removeCommonWords = (wordsObject, commonWords = commonWordsDefault) => {
         const words = Object.keys(wordsObject);
         const wordsLeft = words.map(word => {
             if (!commonWords.includes(word) && word.length > 2) {
@@ -29,8 +30,9 @@ module.exports = {
             newObject[word] = wordsObject[word]
         }
         return newObject
-    },
-    minWordCount(minimum, wordsObject) {
+    }
+
+    exports.minWordCount = (minimum, wordsObject) => {
         const newObject = {};
         const words = Object.keys(wordsObject);
         for (const word of words) {
@@ -40,4 +42,3 @@ module.exports = {
         }
         return newObject
     }
-}

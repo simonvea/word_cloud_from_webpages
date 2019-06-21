@@ -7,6 +7,12 @@ const helpers = require('./helper-functions')
 const urlFile = fs.readFileSync('./urls.json');
 const urls = JSON.parse(urlFile);
 
+const options = {
+    urls,
+    commonWords: [],
+    minNumberOfWords: 2
+}
+
 getKeyWordsFromEachUrl(urls).then(wordCounts => {
    const wordCountTotal = helpers.combineCounts(wordCounts);
    const relevantWords = helpers.removeCommonWords(wordCountTotal);
