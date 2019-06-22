@@ -1,7 +1,9 @@
 const d3 = require("d3")
 const cloud = require("d3-cloud");
 
-export default function createCloud(words) {
+module.exports = function createCloud(words) {
+
+    //Send html?
     return words
 }
 

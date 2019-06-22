@@ -4,6 +4,7 @@ const getKeyWordsFromUrls = require('./getKeywords/get-keywords');
 const helpers = require('./getKeywords/helpers');
 const express = require('express');
 const path = require('path');
+const { createCanvas, loadImage } = require('canvas')
 
 const wordsFetched = []
 
@@ -12,7 +13,8 @@ const app = express();
 const port = 3000;
 
 app.use(express.static('public'));
-app.get('/src/:name', (req, res) => {
+
+app.get('/dist/:name', (req, res) => {
     const options = {
         root: path.join(__dirname, 'src'),
     }
@@ -25,6 +27,7 @@ app.get('/src/:name', (req, res) => {
 })
 
 app.use(express.json())
+
 app.post('/keywords', (req, res) => {
     const urls = req.body.urls;
     const htmlElement = req.body.htmlElement;
@@ -40,6 +43,28 @@ app.post('/keywords', (req, res) => {
             //res.send()
             console.log(error)
         });
+})
+
+app.post('/wordcloud', (req, res) => {
+    const words = req.body;
+    //const cloud = createCloud(words);
+
+    const canvas = createCanvas(200, 200)
+    const ctx = canvas.getContext('2d')
+
+    ctx.font = '30px Impact'
+    ctx.rotate(0.1)
+    ctx.fillText('Awesome!', 50, 100)
+    
+    // Draw line under text
+    var text = ctx.measureText('Awesome!')
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)'
+    ctx.beginPath()
+    ctx.lineTo(50, 102)
+    ctx.lineTo(50 + text.width, 102)
+    ctx.stroke()
+
+    console.log(canvas)
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
