@@ -19,16 +19,15 @@ form.addEventListener("submit", (e) => {
     const urlsWithHttp = urls.map(url => url.startsWith("www") ? prependHttp(url): url);
 
     if(numberOfWords.length < 1) {numberOfWords = 10};
-    if(htmlElement.length < 1) {htmlElement = 'body'};
+    if(htmlElement.length < 1) {htmlElement = 'body'}; //.import-decoration for Finn.no
 
     const data = {
         urls: urlsWithHttp,
         htmlElement,
-        numberOfWords
     };
     console.log(data)
 
-    sendData(data).then(response => {
+    getKeywords(data).then(response => {
         document.getElementById('response').innerHTML = response;
     }).catch(err => {
         console.error(err);
@@ -53,7 +52,7 @@ function prependHttp(url) {
     return "http://" + url
 }
 
-async  function sendData(data) {
+async  function getKeywords(data) {
     const url = '/keywords';
     const init = {
         method: "POST",
@@ -64,7 +63,7 @@ async  function sendData(data) {
     }
 
     const response = await fetch(url, init);
-    const html = await response.text();
+    const keywords = await response.json();
 
-    return html
+    return keywords
 }
