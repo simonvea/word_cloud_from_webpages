@@ -21,8 +21,8 @@ app.post('/keywords', (req, res) => {
         .then(wordCounts => {
             const wordCountTotal = helpers.combineResultsFromEachUrl(wordCounts);
             const cleanedWordCount = helpers.getRelevantKeyWords(wordCountTotal);
-            const html = createWordCloud(cleanedWordCount, numberOfWords);
-            res.send(html)
+            const groupedWords = helpers.groupWordsByCount(cleanedWordCount);
+            res.json(groupedWords)
         }).catch(error => {
             //res.send()
             console.log(error)
