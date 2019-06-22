@@ -7,7 +7,7 @@ export default function createCloud(words) {
   const paddingBetweenWords = 5;
   const rotationDeg = 90;
   const font = "Impact";
-  console.log(words);
+  
   const layout = cloud()
     .size([svgWidth,svgHeight])
     .words(words) //Each word needs to have the form: {text: "ord", size: 50, test: "haha"}

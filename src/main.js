@@ -22,7 +22,6 @@ form.addEventListener("submit", (e) => {
             const wordsWithSize = addSize(sizeOptions);
             const wordsWithColor = addColorToEachWord(wordsWithSize);
             const flattenedArray = flattenArray(wordsWithColor);
-            console.log("flatt: ", flattenedArray)
 
             createCloud(flattenedArray)
 

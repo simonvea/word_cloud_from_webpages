@@ -29,7 +29,7 @@ async function getHTML(url) {
 }
 
 function countWords(string) {
-    const regExp = /\S+/gi;
+    const regExp = /\S+[^\W]/gi;
     const words = string.toLowerCase().match(regExp);
     const count = {};
     
