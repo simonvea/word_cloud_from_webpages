@@ -37,6 +37,7 @@ app.post('/keywords', (req, res) => {
             const cleanedWordCount = helpers.getRelevantKeyWords(wordCountTotal);
             const groupedWords = helpers.groupWordsByCount(cleanedWordCount);
             wordsFetched.push(groupedWords);
+            console.log(wordsFetched);
             res.json(groupedWords)
         }).catch(error => {
             //res.send()

@@ -1,52 +1,49 @@
-const d3 = require("d3")
+const d3 = require("d3");
 const cloud = require("d3-cloud");
 
-module.exports = function createCloud(words) {
-
-    //Send html?
-    return words
-}
-
-const options = {
-    svgSize: ["width","height"],
-    words: {
-        text: "ord",
-        size: 50,
-        test: "haha"
-    },
-    padding: 5,
-    rotation: 90,
-}
-
-const layout = cloud()
-    .size([500, 500])
-    .words([
-      "Hello", "world", "normally", "you", "want", "more", "words",
-      "than", "this"].map(function(d) {
-      return {text: d, size: 10 + Math.random() * 90, test: "haha"};
-    }))
-    .padding(5)
-    .rotate(function() { return ~~(Math.random() * 2) * 90; })
-    .font("Impact")
-    .fontSize(function(d) { return d.size; })
+export default function createCloud(words) {
+  const svgWidth = 500;
+  const svgHeight = 500;
+  const paddingBetweenWords = 5;
+  const rotationDeg = 90;
+  const font = "Impact";
+  console.log(words);
+  const layout = cloud()
+    .size([svgWidth,svgHeight])
+    .words(words) //Each word needs to have the form: {text: "ord", size: 50, test: "haha"}
+    .padding(paddingBetweenWords)
+    .rotate(() => ~~(Math.random() * 4) * 45 - 45)
+    .font(font)
+    .fontSize(d => d.size)
     .on("end", draw);
 
-layout.start();
+  layout.start();
+
+}
 
 function draw(words) {
-  d3.select("body").append("svg")
-      .attr("width", layout.size()[0])
-      .attr("height", layout.size()[1])
+  const element = "#word-cloud"
+  const svgWidth = 500;
+  const svgHeight = 500;
+  const font = "Impact";
+  const textAnchor = "middle"
+
+
+
+  d3.select("#word-cloud").append("svg")
+      .attr("width", svgWidth)
+      .attr("height", svgHeight)
     .append("g")
-      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+      .attr("transform", "translate(" + svgWidth / 2 + "," + svgHeight / 2 + ")")
     .selectAll("text")
       .data(words)
     .enter().append("text")
-      .style("font-size", function(d) { return d.size + "px"; })
-      .style("font-family", "Impact")
-      .attr("text-anchor", "middle")
-      .attr("transform", function(d) {
-        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+      .style("font-size", word => word.size + "px")
+      .style("font-family", font)
+      .attr("text-anchor", textAnchor)
+      .attr("transform", (word) => {
+        return "translate(" + [word.x, word.y] + ")rotate(" + word.rotate + ")";
       })
-      .text(function(d) { return d.text; });
+      .attr("fill", word => word.fill)
+      .text(word => word.text);
 }
