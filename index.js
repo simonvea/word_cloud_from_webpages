@@ -1,8 +1,9 @@
 'use strict'
 
-const getKeyWordsFromUrls = require('./get-keywords');
-const helpers = require('./helpers');
+const getKeyWordsFromUrls = require('./getKeywords/get-keywords');
+const helpers = require('./getKeywords/helpers');
 const express = require('express');
+const path = require('path');
 
 const wordsFetched = []
 
@@ -11,6 +12,17 @@ const app = express();
 const port = 3000;
 
 app.use(express.static('public'));
+app.get('/src/:name', (req, res) => {
+    const options = {
+        root: path.join(__dirname, 'src'),
+    }
+    const fileName = req.params.name;
+
+    res.sendFile(fileName, options, (err) => {
+        if (err) {next(err)}
+        else {console.log('Sent:', fileName)}
+    })
+})
 
 app.use(express.json())
 app.post('/keywords', (req, res) => {

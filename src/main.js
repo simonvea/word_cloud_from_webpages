@@ -28,8 +28,9 @@ form.addEventListener("submit", (e) => {
     console.log(data)
 
     getKeywords(data).then(response => {
-        document.getElementById('word-cloud').innerHTML = response;
-    }).catch(err => {
+        response.json()   
+    }).then(data => document.getElementById('word-cloud').innerHTML = data
+    ).catch(err => {
         console.error(err);
         document.getElementById('word.cloud').innerHTML = '<p> Beklager, men noe gikk galt :( </p>';
     })

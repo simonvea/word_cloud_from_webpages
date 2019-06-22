@@ -1,6 +1,6 @@
 module.exports = createWordCloud
 
-const helpers = require('../helpers');
+const helpers = require('../getKeywords/helpers');
 
 function createWordCloud(wordsObject, numberOfWords = 10) {
     const sortedWords = sortWords(groupedWords); //sorted low to high
