@@ -13,7 +13,7 @@ form.addEventListener("submit", (e) => {
 
     if(urls.some(url => !checkIfLink(url))) {
         console.error("Feil format på lenker");
-        document.getElementById('response').innerHTML = '<p> Linkene må ha gyldig format! Enten begynne på www eller http og separeres med komma!</p>';
+        document.getElementById('word-cloud').innerHTML = '<p> Linkene må ha gyldig format! Enten begynne på www eller http og separeres med komma!</p>';
         return
     }
     const urlsWithHttp = urls.map(url => url.startsWith("www") ? prependHttp(url): url);
@@ -28,10 +28,10 @@ form.addEventListener("submit", (e) => {
     console.log(data)
 
     getKeywords(data).then(response => {
-        document.getElementById('response').innerHTML = response;
+        document.getElementById('word-cloud').innerHTML = response;
     }).catch(err => {
         console.error(err);
-        document.getElementById('response').innerHTML = '<p> Beklager, men noe gikk galt :( </p>';
+        document.getElementById('word.cloud').innerHTML = '<p> Beklager, men noe gikk galt :( </p>';
     })
     linksElement.value = "Legg til lenke her, separer flere lenker med komma";
     targetHTMLElement.value = "";

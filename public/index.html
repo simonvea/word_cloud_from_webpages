@@ -4,23 +4,53 @@
         <title>Ordsky.no</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, shrink-to-fit=no">
         <link rel="stylesheet" href="./style.css" type="text/css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body>
-        <header>
-            <h1>Ordsky.no</h1>
-        </header>
-        <main>
-            <form>
-                <textarea id="lenker">Legg til lenke her, separer flere linker med komma</textarea>
-                <input type="text" id="html-element" placeholder="HTML Element med relevant text (CSS syntax)">
-                <input type="number" id="number-of-words" min="1" max="20" placeholder="10">
-                <button type="submit" id="klikk-meg">Send data</button>
-            </form>
-            <section>
-                    <div id="response"></div>
+        <header class="container">
+            <section class="title">
+                <h1 class="display-1">Ordsky.no</h1>
+                <h3>Der ordene trives</h3>
             </section>
+        </header>
+        <main class="container">
+            <section class="row justify-content-center">
+                <div>
+                    <p class="lead text-center">
+                        Velkommen!
+                    </p>
+                    <p>
+                        Her kan du lage en ordsky fra innholdet til andre nettsider. Alt du trenger er en link.
+                    </p>
+                </div>
+            </section>
+            <section class="row justify-content-center">
+                <form class="col-md-6">
+                    <div class="form-group">
+                        <label for="lenker">Tekst:</label>
+                        <textarea id="lenker" class="form-control" row="3">Legg til lenke her, separer flere lenker med komma</textarea>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="html-element">HTML Element med relevant tekst:</label>
+                            <input type="text" class="form-control" id="html-element" placeholder="HTML Element i CSS syntax">
+                        </div>
+                        <div class="form-group col">
+                            <label for="number-of-words">Antall ord:</label>
+                            <input type="number" class="form-control" id="number-of-words" min="1" max="20" placeholder="10">
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary" id="klikk-meg">Generer ordsky</button>
+                    </div>
+                </form>
+            </section>
+            <section class="row">
+                    <div id="word-cloud"></div>
+            </section>
+            
         </main>
         <footer>
             &copy; Simon Opheim
